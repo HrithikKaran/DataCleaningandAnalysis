@@ -4,27 +4,26 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import os
 
+#add file path
 file_path =  r'C:\Users\DELL\Desktop\Task1 for internship\data.csv'
 df = pd.read_csv(file_path)
 
 #check for missing values
 print(df.isnull().sum())
 
-#handling missing values(drop or fill)
+#handling missing values using drop
 df = df.dropna()
 
-#remove duplicates
+#get the duplicates
 print("Number of duplicates: ", df.duplicated().sum())
 
 #remove duplicates
 df = df.drop_duplicates()
 
-print("Number of duplicates after removing: ", df.duplicated().sum())
-
 #explore outliers
 #box plot for outlier detection
 sns.boxplot(data = df)
-#plt.show()
+
 
 #remove outliers using z-score
 from scipy.stats import zscore
@@ -35,4 +34,5 @@ df_no_outliers = df[(abs_z_scores < 3).all(axis= 1)]
 #save the cleaned dataset
 df.to_csv('cleaned_dataset.csv', index=False)
 
+#view the cleaned data
 cleaned_df = pd.read_csv('cleaned_dataset.csv')
